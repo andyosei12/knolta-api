@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String  @id  @default(uuid())
+  email String  @unique
+  password String 
+  createdAt DateTime  @default(now())
+}
+
+model Event {
+  id String  @id  @default(uuid())
+  date DateTime
+  name String
+  venue String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Appointment {
+  id String  @id  @default(uuid())
+  date DateTime
+  thurifier String?
+  boarBearer String?
+  crossBearer String?
+  firstAcolyte String?
+  secondAcolyte String?
+  MC String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Executive {
+  id String  @id  @default(uuid())
+  chairPerson String
+  viceChairPerson String
+  secretary String
+  assistantSecretary String
+  financialSecretary String
+  organizer String
+}
