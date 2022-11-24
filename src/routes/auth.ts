@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createUser } from "../handlers/auth";
-import validateAuthInputs from "../middlewares/validateAuthInputs";
+import { createUser, signInUser } from "../handlers/auth";
+import { findUser, validateAuthInputs } from "../middlewares/auth";
 const router = Router();
 
 // Sign up user
 router.post("/signup", validateAuthInputs, createUser);
+router.post("/signin", validateAuthInputs, findUser, signInUser);
 
 export default router;
