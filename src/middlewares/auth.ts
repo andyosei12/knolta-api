@@ -1,4 +1,5 @@
 import prisma from "../db";
+import jwt from "jsonwebtoken";
 import { compareUserPassword } from "../modules/auth";
 
 export const validateAuthInputs = (req, res, next) => {
@@ -51,5 +52,32 @@ export const findUser = async (req, res, next) => {
       req.user = user;
       next();
     }
+  }
+};
+
+export const protectRoute = (req, res, next) => {
+  const bearer = req.headers.authorization;
+  if (!bearer) {
+    res.status(401);
+    res.json({ message: "not authorized" });
+    return;
+  }
+
+  const [_, token] = bearer.split(" ");
+  if (!token) {
+    res.status(401);
+    res.json({ message: "not authorized" });
+    return;
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET as string);
+    next();
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(401);
+    res.json({ message: "not authorized" });
+    return;
   }
 };
