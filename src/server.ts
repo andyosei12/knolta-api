@@ -17,3 +17,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/event", eventRouter);
 app.use("/api/executive", executiveRouter);
+
+// Error Handling
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: "Sorry we screwed up" });
+});
