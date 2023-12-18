@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connect from './db/index.js';
 import userRoutes from './routes/user.js';
+import appointmentRoutes from './routes/appointment.js';
+import { verifyUser } from './middleware/user.js';
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,7 @@ app.use(morgan('dev'));
 connect();
 
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/appointments', verifyUser, appointmentRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
