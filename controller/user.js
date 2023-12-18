@@ -35,3 +35,43 @@ export const createUser = async (req, res) => {
     });
   }
 };
+
+// login user
+export const loginUser = async (req, res) => {
+  const user_name = req.body.user_name;
+  const passwordInput = req.body.password;
+
+  try {
+    const user = await UserModel.findOne({ user_name });
+    if (!user) {
+      return res.status(404).json({
+        error: true,
+        message: 'User does not exist. Try signing up',
+      });
+    }
+
+    const validPassword = await user.isValidPassword(passwordInput);
+    if (!validPassword) {
+      return res.status(401).json({
+        message: 'Username or password is not correct',
+        error: true,
+      });
+    }
+    const token = jwt.sign(
+      { user_name: user.user_name, id: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    return res.status(200).json({
+      message: 'Login successfully',
+      token,
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'An error occured',
+      error: error.message,
+    });
+  }
+};

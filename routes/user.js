@@ -1,6 +1,6 @@
 import express from 'express';
-import { createUser } from '../controller/user.js';
-import { validateUserCreation } from '../middleware/user.js';
+import { createUser, loginUser } from '../controller/user.js';
+import { validateUserCreation, validateUserLogin } from '../middleware/user.js';
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 });
 
 // create a new user
-router.post('/', validateUserCreation, createUser);
+router.post('/signup', validateUserCreation, createUser);
+router.post('/login', validateUserLogin, loginUser);
 
 export default router;
