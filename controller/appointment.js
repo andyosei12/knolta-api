@@ -34,7 +34,6 @@ export const createAppointment = async (req, res) => {
 
 // update an appointment
 export const updateAppointment = async (req, res) => {
-  console.log('hey');
   const { id } = req.params;
   const data = req.body;
   try {
