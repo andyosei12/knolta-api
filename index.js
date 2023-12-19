@@ -5,6 +5,7 @@ import connect from './db/index.js';
 import userRoutes from './routes/user.js';
 import appointmentRoutes from './routes/appointment.js';
 import executiveRoutes from './routes/executive.js';
+import programRoutes from './routes/program.js';
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ connect();
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/appointments', appointmentRoutes);
 app.use('/api/v1/executives', executiveRoutes);
+app.use('/api/v1/programs', programRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
