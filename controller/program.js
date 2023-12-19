@@ -3,8 +3,8 @@ import ProgramModel from '../models/program.js';
 // Get all programs
 export const getAllPrograms = async (req, res) => {
   try {
-    const programs = await ProgramModel.find();
-    res.status(200).json({ programs }).sort({ date: 1 });
+    const programs = await ProgramModel.find().sort({ date: 1 });
+    res.status(200).json({ programs });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
